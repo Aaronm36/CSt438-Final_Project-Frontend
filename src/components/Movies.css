@@ -1,0 +1,20 @@
+.movie-table {
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
+    border-collapse: collapse;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  .movie-table th, .movie-table td {
+    align-content: center;
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .movie-table th {
+    align-content: center;
+    background-color: #f2f2f2;
+  }
