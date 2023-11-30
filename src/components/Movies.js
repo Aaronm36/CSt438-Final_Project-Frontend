@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {SERVER_URL} from '../constants';
 import './Movies.css'; // Import your CSS file
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const MoviesComponent = () => {
   const [movies, setMovie] = useState([]);
@@ -39,7 +40,7 @@ const MoviesComponent = () => {
                 </thead>
                 <tbody>
                   {movies.map((row, idx) => (
-                    <tr key={idx}>
+                    <tr key={idx} class="active-row" >
                       <td>{row.movieTitle}</td>
                       <td>{row.movieRating}</td>
                       <td>{row.movieLength}</td>
@@ -48,7 +49,9 @@ const MoviesComponent = () => {
                   ))}
                 </tbody>
               </table>
-              <button> <Link to={`/`}> View Schedule </Link> </button>
+              {/* <button> <Link to={`/`}> View Schedule </Link> </button> */}
+
+              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}}> View Schedule </Button>
           </div>
       </div>
     )

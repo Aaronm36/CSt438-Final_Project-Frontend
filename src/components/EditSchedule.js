@@ -42,7 +42,7 @@ function EditSchedule(props) {
             .then(res => {
                 if (res.ok) {
                   fetchSchedules(scheduleId);
-                  setMessage("schedule saved.");
+                  setMessage("Schedule saved.");
                 } else {
                   setMessage("Save error. "+res.status);
                   console.error('Save Schedule error =' + res.status);

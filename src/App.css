@@ -30,7 +30,7 @@
 
 body {
   box-sizing: border-box;
-  color: #220f5f;
+  color: black;
   font-family:  sans-serif;
 }
 
@@ -49,7 +49,20 @@ body {
 }
 
 table {
+  margin-left: auto;
+  margin-right: auto;
   border-collapse: collapse;
+  font-size: 0.9em;
+  font-family: sans-serif;
+  min-width: 400px;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
+  border-top-color: rgb(0, 0, 0);
+}
+
+thead tr {
+  background-color: black;
+  color: #ffffff;
+  text-align: left;
 }
 
 tr th {
@@ -76,6 +89,6 @@ input {
 }
 
 input:focus {
-  outline: 1px solid #ccc;
-  border: 1px solid #ccc;
+  outline: 1px solid black;
+  border: 1px solid black;
 }

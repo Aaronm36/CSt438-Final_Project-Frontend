@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {SERVER_URL} from '../constants';
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function AddMovie(props) { 
 
@@ -22,9 +23,9 @@ function AddMovie(props) {
             body: JSON.stringify(movie)})
     .then((response) => {
       if(response.ok){
-        setMessage("Schedule Added");
+        setMessage("Movie Added");
       } else {
-         setMessage("Failed to add Schedule")
+         setMessage("Failed to add Movie")
       }})
     .catch((err) => {
       setMessage(err)});
@@ -64,8 +65,11 @@ function AddMovie(props) {
                     </tr>
                 </tbody>
               </table>
-              <button id="submit" type="button" margin="auto" onClick={handleAdd}>Save Movie</button>
-              <button> <Link to={`/`}>Back</Link></button>
+              {/* <button id="submit" type="button" margin="auto" onClick={handleAdd}>Save Movie</button> */}
+              <Button color="error" style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={handleAdd}> Save Movie </Button>
+              {/* <button> <Link to={`/`}>Back</Link></button> */}
+
+              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}}> Back </Button>
             </div>
       </div>
   ); 

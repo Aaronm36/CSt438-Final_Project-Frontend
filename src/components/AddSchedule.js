@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {SERVER_URL} from '../constants';
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function AddSchedule(props) { 
 
@@ -68,8 +69,12 @@ function AddSchedule(props) {
                     </tr>
                 </tbody>
               </table>
-              <button id="submit" type="button" margin="auto" onClick={handleAdd}>Save Schedule</button>
-              <button> <Link to={`/`}>Back</Link></button>
+              {/* <button id="submit" type="button" margin="auto" onClick={handleAdd}>Save Schedule</button> */}
+              <Button color="error" style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={handleAdd}> Save Schedule </Button>
+              {/* <button> <Link to={`/`}>Back</Link></button> */}
+              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}}> Back </Button>
+
+              
             </div>
       </div>
   ); 

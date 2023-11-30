@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {SERVER_URL} from '../constants';
 import './Schedule.css'; // Import your CSS file
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 const ScheduleComponent = () => {
   const [schedule, setSchedule] = useState([]);
@@ -39,7 +40,7 @@ const ScheduleComponent = () => {
                 </thead>
                 <tbody>
                   {schedule.map((row, idx) => (
-                    <tr key={idx}>
+                    <tr key={idx} class="active-row">
                       <td>{row.movieTitle}</td>
                       <td>{row.date}</td>
                       <td>{row.start_time}</td>
@@ -51,9 +52,12 @@ const ScheduleComponent = () => {
                   ))}
                 </tbody>
               </table>
-              <button> <Link to={`/addSchedule`}>Add Schedule</Link></button>
+              <Button color="error" component={Link} to={`/addSchedule`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Add Schedule </Button>
+              <Button color="error" component={Link} to={`/addMovie`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Add Movie </Button>
+              <Button color="error" component={Link} to={`/Movies`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Movies </Button>
+              {/* <button> <Link to={`/addSchedule`}> Add Schedule </Link> </button>
               <button> <Link to={`/addMovie`}>Add Movie</Link></button>
-              <button> <Link to={`/Movies`}>View Movies</Link></button>
+              <button> <Link to={`/Movies`}>View Movies</Link></button> */}
           </div>
       </div>
     )
