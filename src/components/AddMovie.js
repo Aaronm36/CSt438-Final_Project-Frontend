@@ -7,6 +7,7 @@ function AddMovie(props) {
 
   const [message, setMessage] = useState('');
   const [movie, setMovie] = useState({movieTitle: "", movieRating: "", movieLength: 0, priceId: 0});
+  const token = sessionStorage.getItem("jwt");
 
   const handleChange = (event) => {
     setMovie({...movie, [event.target.name]:event.target.value});
@@ -19,7 +20,7 @@ function AddMovie(props) {
     fetch(`${SERVER_URL}/movie`, 
           {  
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', 'Authorization' : token},
             body: JSON.stringify(movie)})
     .then((response) => {
       if(response.ok){
@@ -39,9 +40,9 @@ function AddMovie(props) {
 
   return (
       <div>
-      <h2>Add Movie</h2>
+      <h2 style={{color: "white"}}>Add Movie</h2>
             <div margin="auto" >
-              <h4 id="gmessage" >{message}&nbsp;</h4>
+              <h4 id="gmessage" style={{color: "white"}} >{message}&nbsp;</h4>
               <table className="Center"> 
                 <thead>
                   <tr>
@@ -69,7 +70,7 @@ function AddMovie(props) {
               <Button color="error" style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={handleAdd}> Save Movie </Button>
               {/* <button> <Link to={`/`}>Back</Link></button> */}
 
-              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}}> Back </Button>
+              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 100, height: 30, color: "white", background: "black"}}> Back </Button>
             </div>
       </div>
   ); 

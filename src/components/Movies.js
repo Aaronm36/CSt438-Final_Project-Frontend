@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 const MoviesComponent = () => {
   const [movies, setMovie] = useState([]);
   const [message, setMessage] = useState('');
+  const token = sessionStorage.getItem("jwt");
 
   useEffect(() => {
     // called once after intial render
@@ -15,7 +16,9 @@ const MoviesComponent = () => {
   
    const fetchMovies = () => {
        console.log("fetchMovies");
-       fetch(`${SERVER_URL}/movies`)
+       fetch(`${SERVER_URL}/movies`, {
+        headers: {'Authorization' : token}
+       })
        .then(response => response.json()) 
        .then(data => { 
          console.log("movies length "+ data.length);
@@ -29,9 +32,9 @@ const MoviesComponent = () => {
     
     return (
       <div>
-        <h2> Movies </h2>
+        <h2 style={{color: "white"}}> Movies </h2>
         <div margin="auto" >
-          <h4>{message}&nbsp;</h4>
+          <h4 style={{color: "white"}} >{message}&nbsp;</h4>
               <table className="movie-table"> 
                 <thead>
                   <tr>
@@ -41,7 +44,11 @@ const MoviesComponent = () => {
                 <tbody>
                   {movies.map((row, idx) => (
                     <tr key={idx} class="active-row" >
-                      <td>{row.movieTitle}</td>
+                      <td>
+                        <Link to={`/movieSearch/${encodeURIComponent(row.movieTitle)}`}>
+                          {row.movieTitle}
+                        </Link>
+                      </td>
                       <td>{row.movieRating}</td>
                       <td>{row.movieLength}</td>
                       <td> <Link to={`/deleteMovie/${row.movieId}`} > Delete </Link> </td>
@@ -49,8 +56,6 @@ const MoviesComponent = () => {
                   ))}
                 </tbody>
               </table>
-              {/* <button> <Link to={`/`}> View Schedule </Link> </button> */}
-
               <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}}> View Schedule </Button>
           </div>
       </div>

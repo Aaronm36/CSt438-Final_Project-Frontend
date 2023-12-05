@@ -7,6 +7,7 @@ function AddSchedule(props) {
 
   const [message, setMessage] = useState('');
   const [schedule, setSchedule] = useState({movieTitle: "", date: "", start_time: "", end_time: "", roomId: 0});
+  const token = sessionStorage.getItem("jwt");
 
   const handleChange = (event) => {
     setSchedule({...schedule, [event.target.name]:event.target.value});
@@ -20,7 +21,7 @@ function AddSchedule(props) {
     fetch(`${SERVER_URL}/schedule`, 
           {  
             method: 'POST',
-            headers: {'Content-Type': 'application/json'},
+            headers: {'Content-Type': 'application/json', 'Authorization' : token},
             body: JSON.stringify(schedule)})
     .then((response) => {
       if(response.ok){
@@ -40,9 +41,9 @@ function AddSchedule(props) {
 
   return (
       <div>
-      <h2>Add Schedule </h2>
+      <h2 style={{color: "white"}}>Add Schedule </h2>
             <div margin="auto" >
-              <h4 id="gmessage" >{message}&nbsp;</h4>
+              <h4 id="gmessage" style={{color: "white"}} >{message}&nbsp;</h4>
               <table className="Center"> 
                 <thead>
                   <tr>
@@ -72,7 +73,7 @@ function AddSchedule(props) {
               {/* <button id="submit" type="button" margin="auto" onClick={handleAdd}>Save Schedule</button> */}
               <Button color="error" style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={handleAdd}> Save Schedule </Button>
               {/* <button> <Link to={`/`}>Back</Link></button> */}
-              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}}> Back </Button>
+              <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 100, height: 30, color: "white", background: "black"}}> Back </Button>
 
               
             </div>

@@ -1,12 +1,14 @@
 import React, {useState, useEffect}  from 'react';
 import {SERVER_URL} from '../constants';
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function EditSchedule(props) {
 
     const [currentSchedule, setName] = useState([]);
     let scheduleId=0;
     const [message, setMessage] = useState('');
+    const token = sessionStorage.getItem("jwt");
 
     const path = window.location.pathname;
     const s = /\d+$/.exec(path)[0];
@@ -21,7 +23,9 @@ function EditSchedule(props) {
       const fetchSchedules = ( ) => {
           setMessage('');
           console.log("fetchSchedule "+ scheduleId);
-          fetch(`${SERVER_URL}/schedule/${scheduleId}`)
+          fetch(`${SERVER_URL}/schedule/${scheduleId}`, {
+            headers: {'Authorization' : token}
+          })
           .then((response) => response.json()) 
           .then((data) => { setName(data) })       
           .catch(err => { 
@@ -36,7 +40,7 @@ function EditSchedule(props) {
             fetch(`${SERVER_URL}/schedule/${scheduleId}` , 
                 {  
                   method: 'PUT', 
-                  headers: {'Content-Type': 'application/json' }, 
+                  headers: {'Content-Type': 'application/json', 'Authorization' : token}, 
                   body: JSON.stringify( currentSchedule )
                 } )
             .then(res => {
@@ -77,9 +81,9 @@ function EditSchedule(props) {
 
     return (
         <div>
-          <h2> Edit Schedule </h2>
+          <h2 style={{color: "white"}}> Edit Schedule </h2>
           <div margin="auto" >
-            <h4 id="gmessage" >{message}&nbsp;</h4>
+            <h4 id="gmessage" style={{color: "white"}}>{message}&nbsp;</h4>
             <table className="Center"> 
               <thead>
                 <tr>
@@ -104,8 +108,8 @@ function EditSchedule(props) {
                   </tr>
               </tbody>
             </table>
-            <button id="submit" type="button" margin="auto" onClick={saveSchedule}>Save Schedule</button>
-            <button> <Link to={`/`}>Back</Link></button>
+            <Button color="error" style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={saveSchedule}> Save Schedule </Button>
+            <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 100, height: 30, color: "white", background: "black"}}> Back </Button>
           </div>
         </div>
       );

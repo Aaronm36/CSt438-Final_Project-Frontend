@@ -1,12 +1,14 @@
 import React, {useState, useEffect}  from 'react';
 import {SERVER_URL} from '../constants';
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function DeleteMovie(props) { 
 
     const [currentMovie, setName] = useState([]);
     let movieId=0;
     const [message, setMessage] = useState('');
+    const token = sessionStorage.getItem("jwt");
   
     const path = window.location.pathname;
     const s = /\d+$/.exec(path)[0];
@@ -20,7 +22,8 @@ function DeleteMovie(props) {
     const fetchMovies = ( ) => {
         setMessage('');
         console.log("fetchMovie "+movieId);
-        fetch(`${SERVER_URL}/movie/${movieId}`)
+        fetch(`${SERVER_URL}/movie/${movieId}`, {
+            headers: {'Authorization' : token}})
         .then((response) => response.json()) 
         .then((data) => { setName(data) })       
         .catch(err => { 
@@ -33,7 +36,8 @@ function DeleteMovie(props) {
         setMessage(''); 
         console.log("Movie.save ");     
         fetch(`${SERVER_URL}/movie/${movieId}` , 
-            {  method: 'Delete'})
+            {  method: 'Delete',
+               headers: {'Authorization' : token}})
         .then(res => {
           fetchMovies(movieId);
           setMessage("Movie Deleted.");
@@ -49,9 +53,9 @@ function DeleteMovie(props) {
     
     return (
         <div>
-            <h2> Delete Movie </h2>
+            <h2 style={{color: "white"}}> Delete Movie </h2>
             <div margin="auto" >
-            <h4 id="gmessage" >{message}&nbsp;</h4>
+            <h4 id="gmessage" style={{color: "white"}}>{message}&nbsp;</h4>
             <table className="Center"> 
                 <thead>
                 <tr>
@@ -66,8 +70,8 @@ function DeleteMovie(props) {
                     </tr>
                 </tbody>
             </table>
-            <button id="Delete" type="button" margin="auto" onClick={deleteMovie} >Delete Movie</button>
-            <button> <Link to={`/Movies`}>Back</Link></button>
+            <Button color="error" style={{margin: 10, width: 150, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={deleteMovie}> Delete Movie </Button>
+            <Button color="error" component={Link} to={`/Movies`} style={{margin: 10, width: 100, height: 30, color: "white", background: "black"}}> Back </Button>
             </div>
         </div>
         )

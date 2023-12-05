@@ -7,6 +7,7 @@ import { Button } from '@mui/material';
 const ScheduleComponent = () => {
   const [schedule, setSchedule] = useState([]);
   const [message, setMessage] = useState('');
+  const token = sessionStorage.getItem("jwt");
 
   useEffect(() => {
     // called once after intial render
@@ -15,7 +16,9 @@ const ScheduleComponent = () => {
   
    const fetchSchedule = () => {
        console.log("fetchSchedule");
-       fetch(`${SERVER_URL}/schedule`)
+       fetch(`${SERVER_URL}/schedule`, {
+        headers: {'Authorization' : token}
+       })
        .then(response => response.json()) 
        .then(data => { 
          console.log("assignment length "+ data.length);
@@ -29,9 +32,9 @@ const ScheduleComponent = () => {
     
     return (
       <div>
-        <h2> Schedules </h2>
+        <h2 style={{color: "white"}}> Schedules </h2>
         <div margin="auto" >
-          <h4>{message}&nbsp;</h4>
+          <h4 style={{color: "white"}}>{message}&nbsp;</h4>
               <table className="schedule-table"> 
                 <thead>
                   <tr>
@@ -41,7 +44,11 @@ const ScheduleComponent = () => {
                 <tbody>
                   {schedule.map((row, idx) => (
                     <tr key={idx} class="active-row">
-                      <td>{row.movieTitle}</td>
+                      <td>
+                        <Link to={`/movieSearch/${encodeURIComponent(row.movieTitle)}`}>
+                          {row.movieTitle}
+                        </Link>
+                      </td>
                       <td>{row.date}</td>
                       <td>{row.start_time}</td>
                       <td>{row.end_time}</td>
@@ -52,12 +59,9 @@ const ScheduleComponent = () => {
                   ))}
                 </tbody>
               </table>
-              <Button color="error" component={Link} to={`/addSchedule`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Add Schedule </Button>
+              <Button id="submit" color="error" component={Link} to={`/addSchedule`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Add Schedule </Button>
               <Button color="error" component={Link} to={`/addMovie`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Add Movie </Button>
               <Button color="error" component={Link} to={`/Movies`} style={{margin: 10, width: 135, height: 30, color: "white", background: "black"}}> Movies </Button>
-              {/* <button> <Link to={`/addSchedule`}> Add Schedule </Link> </button>
-              <button> <Link to={`/addMovie`}>Add Movie</Link></button>
-              <button> <Link to={`/Movies`}>View Movies</Link></button> */}
           </div>
       </div>
     )

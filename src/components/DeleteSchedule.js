@@ -1,12 +1,14 @@
 import React, {useState, useEffect}  from 'react';
 import {SERVER_URL} from '../constants';
 import {Link} from 'react-router-dom';
+import { Button } from '@mui/material';
 
 function DeleteSchedule(props) { 
 
     const [currentSchedule, setName] = useState([]);
     let scheduleId=0;
     const [message, setMessage] = useState('');
+    const token = sessionStorage.getItem("jwt");
   
     const path = window.location.pathname;
     const s = /\d+$/.exec(path)[0];
@@ -20,7 +22,9 @@ function DeleteSchedule(props) {
     const fetchSchedules = ( ) => {
         setMessage('');
         console.log("fetchSchedule "+scheduleId);
-        fetch(`${SERVER_URL}/schedule/${scheduleId}`)
+        fetch(`${SERVER_URL}/schedule/${scheduleId}`, {
+            headers: {'Authorization' : token}
+        })
         .then((response) => response.json()) 
         .then((data) => { setName(data) })       
         .catch(err => { 
@@ -33,7 +37,8 @@ function DeleteSchedule(props) {
         setMessage(''); 
         console.log("Schedule.save ");     
         fetch(`${SERVER_URL}/schedule/${scheduleId}` , 
-            {  method: 'Delete'})
+            {  method: 'Delete', 
+               headers: {'Authorization' : token}})
         .then(res => {
           fetchSchedules(scheduleId);
           setMessage("Schedule Deleted.");
@@ -49,9 +54,9 @@ function DeleteSchedule(props) {
     
     return (
         <div>
-            <h2> Delete Schedule </h2>
+            <h2 style={{color: "white"}}> Delete Schedule </h2>
             <div margin="auto" >
-            <h4 id="gmessage" >{message}&nbsp;</h4>
+            <h4 id="gmessage" style={{color: "white"}}>{message}&nbsp;</h4>
             <table className="Center"> 
                 <thead>
                 <tr>
@@ -69,8 +74,8 @@ function DeleteSchedule(props) {
                     </tr>
                 </tbody>
             </table>
-            <button id="Delete" type="button" margin="auto" onClick={deleteSchedule} >Delete Schedule</button>
-            <button> <Link to={`/`}>Back</Link></button>
+            <Button color="error" style={{margin: 10, width: 180, height: 30, color: "white", background: "black"}} id="submit" type="button" margin="auto" onClick={deleteSchedule}> Delete Schedule </Button>
+            <Button color="error" component={Link} to={`/`} style={{margin: 10, width: 100, height: 30, color: "white", background: "black"}}> Back </Button>
             </div>
         </div>
         )
